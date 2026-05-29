@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>誰だお前 | Discord Community</title>
+  <meta name="description" content="Discordサーバー『誰だお前』の非公式ランディングページ。雑談、絵文字、タグ、イベント、ゲーム・アニメ・音楽トーク。" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta property="og:title" content="誰だお前 | Discord Community" />
+  <meta property="og:description" content="入った瞬間、問いかけられる。誰だお前。" />
+  <meta property="og:type" content="website" />
+  <style>
+    :root {
+      --bg: #070916;
+      --bg2: #0b1024;
+      --panel: rgba(255,255,255,.075);
+      --panel-strong: rgba(255,255,255,.12);
+      --line: rgba(255,255,255,.18);
+      --text: #f5f7ff;
+      --muted: #aeb7d9;
+      --muted2: #7e87ad;
+      --accent: #8b5cf6;
+      --accent2: #22d3ee;
+      --accent3: #ff4ecd;
+      --good: #52ffa8;
+      --danger: #ff5d75;
+      --shadow: 0 28px 80px rgba(0, 0, 0, .48);
+      --radius: 28px;
+      --max: 1180px;
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif;
+      color: var(--text);
+      background: #070916;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: none;
+      opacity: 0;
+      z-index: -2;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: none;
+      mix-blend-mode: normal;
+      opacity: 0;
+      z-index: 10;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+
+    .noise {
+      position: fixed;
+      inset: -20%;
+      z-index: -1;
+      pointer-events: none;
+      background: none;
+      background-size: auto;
+      opacity: 0;
+      animation: drift 18s linear infinite;
+    }
+
+    @keyframes drift {
+      from { transform: translate3d(0,0,0) rotate(0deg); }
+      to { transform: translate3d(60px,-50px,0) rotate(2deg); }
+    }
+
+    .wrap { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    .nav {
+      position: sticky;
+      top: 14px;
+      z-index: 20;
+      margin-top: 14px;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(7, 9, 22, .68);
+      backdrop-filter: blur(20px);
+      box-shadow: 0 12px 50px rgba(0,0,0,.26);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: .08em;
+      white-space: nowrap;
+    }
+
+    .mark {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #5865f2;
+      box-shadow: 0 0 26px rgba(88,101,242,.32);
+      color: #fff;
+      transform: rotate(-6deg);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      padding: 10px 13px;
+      border-radius: 999px;
+      transition: background .2s, color .2s;
+    }
+
+    .nav-links a:hover { background: rgba(255,255,255,.08); color: var(--text); }
+
+    .join-small {
+      padding: 10px 15px;
+      border-radius: 999px;
+      background: #fff;
+      color: #111322;
+      font-weight: 900;
+      box-shadow: 0 10px 26px rgba(255,255,255,.14);
+    }
+
+    .hero {
+      position: relative;
+      padding: 88px 0 40px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      color: var(--muted);
+      backdrop-filter: blur(12px);
+      font-weight: 700;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--good);
+      box-shadow: 0 0 18px var(--good);
+    }
+
+    h1 {
+      position: relative;
+      margin: 24px 0 16px;
+      font-size: clamp(56px, 10vw, 128px);
+      line-height: .86;
+      letter-spacing: -.09em;
+      font-weight: 1000;
+      text-wrap: balance;
+      text-shadow: 0 0 32px rgba(139,92,246,.34);
+    }
+
+    .glitch {
+      display: inline-block;
+      position: relative;
+      filter: drop-shadow(0 18px 36px rgba(0,0,0,.35));
+    }
+
+    .glitch::before,
+    .glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      inset: 0;
+      opacity: .42;
+      pointer-events: none;
+    }
+
+    .glitch::before {
+      color: var(--accent2);
+      transform: translate(3px, -2px);
+      clip-path: polygon(0 0, 100% 0, 100% 44%, 0 33%);
+      animation: glitchA 3.1s infinite steps(2, end);
+    }
+
+    .glitch::after {
+      color: var(--accent3);
+      transform: translate(-3px, 2px);
+      clip-path: polygon(0 59%, 100% 47%, 100% 100%, 0 100%);
+      animation: glitchB 2.6s infinite steps(2, end);
+    }
+
+    @keyframes glitchA {
+      0%, 88%, 100% { transform: translate(3px, -2px); }
+      90% { transform: translate(8px, 1px); }
+      92% { transform: translate(-6px, -3px); }
+    }
+
+    @keyframes glitchB {
+      0%, 84%, 100% { transform: translate(-3px, 2px); }
+      86% { transform: translate(-9px, 0); }
+      89% { transform: translate(6px, 4px); }
+    }
+
+    .lead {
+      max-width: 640px;
+      margin: 0 0 28px;
+      color: var(--muted);
+      font-size: clamp(17px, 2vw, 22px);
+      line-height: 1.85;
+      font-weight: 650;
+    }
+
+    .lead strong { color: var(--text); }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      cursor: pointer;
+      padding: 15px 19px;
+      border-radius: 16px;
+      font-weight: 950;
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      min-height: 54px;
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: #fff;
+      color: #101323;
+      box-shadow: 0 18px 45px rgba(255,255,255,.16), 0 0 0 1px rgba(255,255,255,.2) inset;
+    }
+
+    .btn-ghost {
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.17);
+      background: rgba(255,255,255,.07);
+      backdrop-filter: blur(10px);
+    }
+
+    .mini-note {
+      color: var(--muted2);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 540px;
+      border-radius: 38px;
+      padding: 24px;
+      background: rgba(255,255,255,.075);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(18px);
+      transform-style: preserve-3d;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      background: rgba(255,255,255,.045);
+      animation: none;
+      opacity: .25;
+      z-index: -1;
+    }
+
+    @property --angle { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+    @keyframes spin { to { --angle: 360deg; } }
+
+    .phone {
+      position: absolute;
+      inset: 34px 34px auto auto;
+      width: min(360px, calc(100% - 68px));
+      height: 470px;
+      border-radius: 34px;
+      background: rgba(7,9,22,.82);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: 0 30px 80px rgba(0,0,0,.45);
+      overflow: hidden;
+      transform: rotate(4deg) translateZ(30px);
+    }
+
+    .phone-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 18px 12px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .server-head {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 18px;
+    }
+
+    .server-icon {
+      width: 58px;
+      height: 58px;
+      flex: none;
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-size: 24px;
+      box-shadow: 0 18px 45px rgba(139,92,246,.35);
+    }
+
+    .server-name { font-weight: 1000; font-size: 22px; line-height: 1.1; }
+    .server-desc { color: var(--muted); font-size: 12px; margin-top: 4px; line-height: 1.5; }
+
+    .chat {
+      padding: 0 18px 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .bubble {
+      width: fit-content;
+      max-width: 92%;
+      padding: 11px 13px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.09);
+      color: #dbe3ff;
+      border: 1px solid rgba(255,255,255,.08);
+      font-size: 13px;
+      line-height: 1.55;
+      animation: floaty 5s ease-in-out infinite;
+    }
+
+    .bubble:nth-child(even) { margin-left: auto; background: linear-gradient(135deg, rgba(139,92,246,.35), rgba(34,211,238,.18)); animation-delay: -1.5s; }
+    .bubble:nth-child(3) { animation-delay: -2.7s; }
+    @keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+    .tag-card {
+      position: absolute;
+      left: 24px;
+      bottom: 32px;
+      width: 245px;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 24px 60px rgba(0,0,0,.35);
+      transform: rotate(-5deg) translateZ(60px);
+    }
+
+    .tag-label { color: var(--muted); font-size: 12px; font-weight: 850; letter-spacing: .08em; text-transform: uppercase; }
+    .tag-main { margin-top: 8px; font-size: 28px; font-weight: 1000; letter-spacing: -.05em; }
+    .tag-sub { margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(.2px);
+      opacity: .85;
+      pointer-events: none;
+    }
+
+    .orb-a { width: 150px; height: 150px; left: -40px; top: 86px; background: rgba(34,211,238,.18); animation: orbit 8s ease-in-out infinite; }
+    .orb-b { width: 96px; height: 96px; right: 28px; bottom: 38px; background: rgba(255,78,205,.16); animation: orbit 9s ease-in-out infinite reverse; }
+    @keyframes orbit { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(28px,-18px) scale(1.06); } }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 42px 0 0;
+    }
+
+    .stat {
+      position: relative;
+      padding: 22px;
+      min-height: 132px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 24px;
+      background: rgba(255,255,255,.06);
+      box-shadow: 0 18px 50px rgba(0,0,0,.2);
+      overflow: hidden;
+    }
+
+    .stat::after {
+      content: "";
+      position: absolute;
+      inset: auto -20px -50px auto;
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: rgba(34,211,238,.14);
+    }
+
+    .stat-num { font-size: clamp(24px, 3vw, 38px); font-weight: 1000; letter-spacing: -.05em; }
+    .stat-cap { margin-top: 8px; color: var(--muted); font-weight: 750; line-height: 1.5; }
+
+    section { padding: 74px 0; }
+    .section-head { max-width: 760px; margin-bottom: 28px; }
+    .kicker { color: var(--accent2); font-size: 13px; font-weight: 1000; letter-spacing: .16em; text-transform: uppercase; }
+    h2 { margin: 10px 0 0; font-size: clamp(34px, 5vw, 64px); line-height: 1; letter-spacing: -.07em; }
+    .section-head p { margin: 16px 0 0; color: var(--muted); line-height: 1.9; font-size: 17px; font-weight: 620; }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature {
+      position: relative;
+      min-height: 265px;
+      padding: 24px;
+      border-radius: var(--radius);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.13);
+      overflow: hidden;
+      transition: transform .25s ease, background .25s ease, border-color .25s ease;
+    }
+
+    .feature:hover { transform: translateY(-6px); background: rgba(255,255,255,.085); border-color: rgba(255,255,255,.24); }
+    .feature::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,.025);
+      opacity: 1;
+      pointer-events: none;
+    }
+
+    .feature > * { position: relative; }
+    .feature-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.12);
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    .feature h3 { margin: 0; font-size: 22px; letter-spacing: -.04em; }
+    .feature p { margin: 12px 0 0; color: var(--muted); line-height: 1.8; font-weight: 570; }
+
+    .timeline {
+      display: grid;
+      gap: 12px;
+      counter-reset: step;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 18px;
+      align-items: stretch;
+      padding: 18px;
+      border-radius: 26px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+
+    .step-num {
+      border-radius: 20px;
+      display: grid;
+      place-items: center;
+      background: rgba(88,101,242,.42);
+      color: #fff;
+      font-weight: 1000;
+      font-size: 28px;
+      min-height: 82px;
+    }
+
+    .step h3 { margin: 3px 0 7px; font-size: 21px; }
+    .step p { margin: 0; color: var(--muted); line-height: 1.75; }
+
+    .cta {
+      position: relative;
+      padding: 50px;
+      border-radius: 38px;
+      background: rgba(255,255,255,.075);
+      border: 1px solid rgba(255,255,255,.18);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: "誰だお前";
+      position: absolute;
+      right: -34px;
+      bottom: -36px;
+      font-size: min(18vw, 210px);
+      font-weight: 1000;
+      letter-spacing: -.12em;
+      color: rgba(255,255,255,.045);
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .cta-content { position: relative; max-width: 730px; }
+    .cta h2 { margin-top: 0; }
+    .cta p { color: var(--muted); line-height: 1.9; font-size: 17px; font-weight: 620; }
+
+    .copybox {
+      display: flex;
+      gap: 10px;
+      max-width: 620px;
+      margin-top: 22px;
+      padding: 10px;
+      border-radius: 20px;
+      background: rgba(7,9,22,.56);
+      border: 1px solid rgba(255,255,255,.13);
+    }
+
+    .copybox input {
+      width: 100%;
+      border: 0;
+      outline: 0;
+      color: var(--text);
+      background: transparent;
+      padding: 0 10px;
+      min-width: 0;
+    }
+
+    .copybox button {
+      flex: none;
+      border: 0;
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 950;
+      color: #101323;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translate(-50%, 20px);
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.92);
+      color: #111322;
+      font-weight: 900;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s, transform .22s;
+      z-index: 40;
+      box-shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    footer {
+      padding: 40px 0 54px;
+      color: var(--muted2);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.on { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-card { min-height: 500px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .features { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .wrap { width: min(100% - 26px, var(--max)); }
+      .nav { top: 8px; }
+      .nav-links { display: none; }
+      .join-small { padding: 10px 12px; }
+      .hero { padding-top: 56px; }
+      h1 { font-size: clamp(50px, 18vw, 92px); }
+      .hero-card { min-height: 565px; padding: 16px; border-radius: 30px; }
+      .phone { inset: 22px auto auto 50%; transform: translateX(-50%) rotate(2deg); width: min(340px, calc(100% - 34px)); }
+      .tag-card { left: 18px; right: 18px; bottom: 22px; width: auto; transform: rotate(-2deg); }
+      .stats { grid-template-columns: 1fr; }
+      .step { grid-template-columns: 1fr; }
+      .step-num { min-height: 58px; }
+      .cta { padding: 28px; border-radius: 28px; }
+      .copybox { flex-direction: column; }
+      .copybox button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="noise" aria-hidden="true"></div>
+
+  <nav class="nav wrap" aria-label="メインナビゲーション">
+    <div class="nav-inner">
+      <a class="brand" href="#top" aria-label="トップへ戻る">
+        <span class="mark">?</span>
+        <span>誰だお前</span>
+      </a>
+      <div class="nav-links">
+        <a href="#about">ABOUT</a>
+        <a href="#features">FEATURES</a>
+        <a href="#join">JOIN</a>
+      </div>
+      <a class="join-small" href="https://discord.com/invite/carrotcake-1391057519228485632" target="_blank" rel="noopener">参加</a>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow reveal"><span class="dot"></span> Japanese Discord Community</div>
+          <h1 class="reveal"><span class="glitch" data-text="誰だお前">誰だお前</span></h1>
+          <p class="lead reveal">
+            入った瞬間、名前より先に空気が伝わる。<br>
+            <strong>雑談・絵文字・タグ・ゲーム・アニメ・音楽</strong>でゆるくつながる、公開コミュニティサーバー。
+          </p>
+          <div class="hero-actions reveal">
+            <a class="btn btn-primary" href="https://discord.com/invite/carrotcake-1391057519228485632" target="_blank" rel="noopener">Discordに参加する <span>↗</span></a>
+            <a class="btn btn-ghost" href="#features">中身を見る</a>
+          </div>
+          <div class="mini-note reveal">
+            ※ このページは公開情報をもとに作成した非公式紹介ページです。メンバー数・オンライン数は調査時点の表示値です。
+          </div>
+        </div>
+
+        <div class="hero-card reveal" id="tiltCard" aria-label="Discordサーバー紹介カード">
+          <div class="orb orb-a"></div>
+          <div class="orb orb-b"></div>
+          <div class="phone">
+            <div class="phone-top"><span>DISCORD</span><span>LIVE-ish</span></div>
+            <div class="server-head">
+              <div class="server-icon">誰</div>
+              <div>
+                <div class="server-name">誰だお前</div>
+                <div class="server-desc">タグ / 雑談 / 絵文字 / 趣味スレッド</div>
+              </div>
+            </div>
+            <div class="chat" aria-hidden="true">
+              <div class="bubble"># まったり雑談：今日なにしてる？</div>
+              <div class="bubble">誰だお前タグ、存在感つよい。</div>
+              <div class="bubble">ゲーム・アニメ・音楽、話題ごとに参加しやすい。</div>
+              <div class="bubble">初参加でも自己紹介から入れる。</div>
+              <div class="bubble">イベントや企画も不定期で開催。</div>
+            </div>
+          </div>
+          <div class="tag-card">
+            <div class="tag-label">Server Tag</div>
+            <div class="tag-main">「誰だお前」</div>
+            <div class="tag-sub">参加すると目に残るタグがもらえる。ゆるいのに、妙に忘れにくい。</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats" aria-label="サーバー概要">
+        <div class="stat reveal"><div class="stat-num" data-count="2629">2,629</div><div class="stat-cap">Members<br>調査時点の掲載値</div></div>
+        <div class="stat reveal"><div class="stat-num" data-count="269">269</div><div class="stat-cap">Online<br>調査時点の掲載値</div></div>
+        <div class="stat reveal"><div class="stat-num">2025.07.05</div><div class="stat-cap">Server created<br>公開掲載情報</div></div>
+        <div class="stat reveal"><div class="stat-num">JP</div><div class="stat-cap">Supported language<br>Japanese</div></div>
+      </div>
+    </section>
+
+    <section id="about" class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">About</div>
+        <h2>名前はふざけてる。中身は入りやすい。</h2>
+        <p>
+          公開情報では、雑談チャンネルが充実し、日常会話・ゲーム・アニメ・音楽などの趣味ごとに話しやすい構成になっていると紹介されています。自己紹介チャンネルもあり、初参加でも入り口を作りやすい設計です。
+        </p>
+      </div>
+      <div class="timeline">
+        <div class="step reveal">
+          <div class="step-num">01</div>
+          <div><h3>まずは入る</h3><p>参加すると「誰だお前」タグがもらえる、というのが大きな看板。見た目で覚えられるタイプのサーバーです。</p></div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">02</div>
+          <div><h3>自己紹介から入る</h3><p>公開説明では、初めての人でも入りやすいように自己紹介チャンネルがあるとされています。いきなり濃い会話に飛び込まなくてよい構造です。</p></div>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">03</div>
+          <div><h3>好きな話題へ流れる</h3><p>まったり雑談だけでなく、ゲーム・アニメ・音楽などの話題が用意されているため、居場所を見つけやすい構成です。</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="wrap">
+      <div class="section-head reveal">
+        <div class="kicker">Features</div>
+        <h2>ゆるい雑談サーバーを、ちゃんと見せる。</h2>
+        <p>このサイトでは、情報を盛らずに、公開ページで確認できた特徴をランディングページ向けに整理しています。</p>
+      </div>
+      <div class="features">
+        <article class="feature reveal">
+          <div class="feature-icon">🏷️</div>
+          <h3>「誰だお前」タグ</h3>
+          <p>参加するだけで印象に残るサーバータグ。サーバー名そのものがネタになり、覚えやすさがあります。</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature-icon">💬</div>
+          <h3>雑談チャンネル</h3>
+          <p>日常のことをゆったり話せる“まったり雑談”系の空気。暇つぶしにも、軽い交流にも寄せやすい。</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature-icon">🎮</div>
+          <h3>趣味ごとの話題</h3>
+          <p>ゲーム、アニメ、音楽など、話題の入口が複数あるため、自分に合った場所を探しやすい構成。</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature-icon">✨</div>
+          <h3>絵文字が充実</h3>
+          <p>リアクションや短いやり取りがしやすい。Discordらしい軽い会話を支える要素です。</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature-icon">🎪</div>
+          <h3>不定期イベント</h3>
+          <p>雑談だけでなく、イベントや企画も不定期で開催されると公開情報に記載されています。</p>
+        </article>
+        <article class="feature reveal">
+          <div class="feature-icon">🧱</div>
+          <h3>マイクラ要素</h3>
+          <p>連携紹介ページでは、マイクラサーバーも充実していると紹介されています。</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="join" class="wrap">
+      <div class="cta reveal">
+        <div class="cta-content">
+          <div class="kicker">Join</div>
+          <h2>で、誰だお前？</h2>
+          <p>
+            その答えは、入ってからでいい。雑談したい人、タグがほしい人、絵文字を使いたい人、なんとなく居場所を増やしたい人向けの公開サーバーです。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="https://discord.com/invite/carrotcake-1391057519228485632" target="_blank" rel="noopener">今すぐ参加する <span>↗</span></a>
+            <a class="btn btn-ghost" href="#top">上に戻る</a>
+          </div>
+          <div class="copybox" aria-label="招待リンクコピー">
+            <input id="inviteLink" value="https://discord.com/invite/carrotcake-1391057519228485632" readonly />
+            <button id="copyBtn" type="button">コピー</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <div>
+      非公式紹介サイト / Not affiliated with Discord Inc. 公開されているDiscord Discover・サーバー紹介サイト等の情報をもとに作成。<br>
+      実際のチャンネル構成、人数、ルール、招待リンクの有効性は変更される場合があります。
+    </div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">招待リンクをコピーしました</div>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('on');
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: 0.14 });
+    reveals.forEach(el => observer.observe(el));
+
+    const card = document.getElementById('tiltCard');
+    if (card && matchMedia('(pointer:fine)').matches) {
+      card.addEventListener('mousemove', (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(900px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 7).toFixed(2)}deg)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    document.querySelectorAll('.feature').forEach(card => {
+      card.addEventListener('pointermove', (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width * 100).toFixed(2) + '%';
+        const y = ((event.clientY - rect.top) / rect.height * 100).toFixed(2) + '%';
+        card.style.setProperty('--x', x);
+        card.style.setProperty('--y', y);
+      });
+    });
+
+    const copyBtn = document.getElementById('copyBtn');
+    const invite = document.getElementById('inviteLink');
+    const toast = document.getElementById('toast');
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(invite.value);
+      } catch (error) {
+        invite.select();
+        document.execCommand('copy');
+      }
+      toast.classList.add('show');
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+    });
+  </script>
+</body>
+</html>
